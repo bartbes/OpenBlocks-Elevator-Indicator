@@ -1,16 +1,16 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "openblocksElevatorIndicator",
+  "name": "OpenBlocks Elevator Indicator",
+  "description": "Indicator for when the player is standing on an OpenBlock elevator",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["bartbes"],
+  "credits": "The Forge, FML and OpenBlocks developers",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["OpenBlocks"]
 }
 ]
