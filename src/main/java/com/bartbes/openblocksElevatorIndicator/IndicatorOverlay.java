@@ -37,6 +37,37 @@ public class IndicatorOverlay extends Gui
 		minecraft = Minecraft.getMinecraft();
 	}
 
+	// Updating stuff
+	private int round(double x)
+	{
+		// Round away from 0
+		int y = (int) x;
+		if (y < 0)
+			return y-1;
+		return y;
+	}
+
+	private void updatePosition()
+	{
+		EntityClientPlayerMP player = minecraft.thePlayer;
+
+		int x = round(player.posX);
+		int y = round(player.posY-player.height);
+		int z = round(player.posZ);
+
+		moved = (x != xPos || y != yPos || z != zPos);
+
+		xPos = x;
+		yPos = y;
+		zPos = z;
+	}
+
+	private Block getBlockUnderPlayer()
+	{
+		World world = minecraft.thePlayer.worldObj;
+		return world.getBlock(xPos, yPos, zPos);
+	}
+
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
@@ -51,6 +82,7 @@ public class IndicatorOverlay extends Gui
 		onElevator = (b == IndicatorMod.instance.elevatorBlock);
 	}
 
+	// Drawing stuff
 	@SubscribeEvent
 	public void onRenderIndicator(RenderGameOverlayEvent.Post event)
 	{
@@ -80,35 +112,5 @@ public class IndicatorOverlay extends Gui
 
 		// Now undo our transformation
 		GL11.glPopMatrix();
-	}
-
-	private int round(double x)
-	{
-		// Round away from 0
-		int y = (int) x;
-		if (y < 0)
-			return y-1;
-		return y;
-	}
-
-	private void updatePosition()
-	{
-		EntityClientPlayerMP player = minecraft.thePlayer;
-
-		int x = round(player.posX);
-		int y = round(player.posY-player.height);
-		int z = round(player.posZ);
-
-		moved = (x != xPos || y != yPos || z != zPos);
-
-		xPos = x;
-		yPos = y;
-		zPos = z;
-	}
-
-	private Block getBlockUnderPlayer()
-	{
-		World world = minecraft.thePlayer.worldObj;
-		return world.getBlock(xPos, yPos, zPos);
 	}
 }
