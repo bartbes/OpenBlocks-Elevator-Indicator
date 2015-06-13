@@ -22,8 +22,13 @@ public class IndicatorOverlay extends Gui
 	private static final ResourceLocation ICON_RES =
 		new ResourceLocation("openblockselevatorindicator:gui/obelevindicator.png");
 
+	// TODO: Pull from OpenBlocks config
+	private static final int ELEVATOR_RANGE = 20;
+
 	private Minecraft minecraft;
 	private boolean onElevator = false;
+	private boolean elevatorAbove = false;
+	private boolean elevatorBelow = false;
 
 	private int xPos = 0;
 	private int yPos = 0;
@@ -68,6 +73,27 @@ public class IndicatorOverlay extends Gui
 		return world.getBlock(xPos, yPos, zPos);
 	}
 
+	private void findElevators()
+	{
+		World world = minecraft.thePlayer.worldObj;
+		Block elevatorBlock = IndicatorMod.instance.elevatorBlock;
+		elevatorAbove = elevatorBelow = false;
+
+		for (int i = yPos-1; i >= yPos - ELEVATOR_RANGE; i--)
+			if (world.getBlock(xPos, i, zPos) == elevatorBlock)
+			{
+				elevatorBelow = true;
+				break;
+			}
+
+		for (int i = yPos+1; i <= yPos + ELEVATOR_RANGE; i++)
+			if (world.getBlock(xPos, i, zPos) == elevatorBlock)
+			{
+				elevatorAbove = true;
+				break;
+			}
+	}
+
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
@@ -80,6 +106,9 @@ public class IndicatorOverlay extends Gui
 
 		Block b = getBlockUnderPlayer();
 		onElevator = (b == IndicatorMod.instance.elevatorBlock);
+
+		if (onElevator)
+			findElevators();
 	}
 
 	// Drawing stuff
@@ -109,9 +138,14 @@ public class IndicatorOverlay extends Gui
 		GL11.glTranslatef(xPos, yPos, 0.0f);
 		GL11.glScalef(0.25f, 0.25f, 1.0f);
 
-		drawTexturedModalRect(-HALF_ICON_SIZE, -ICON_SIZE,
-				0, 0,
-				ICON_SIZE, ICON_SIZE);
+		if (elevatorAbove)
+			drawTexturedModalRect(-HALF_ICON_SIZE, -ICON_SIZE,
+					0, 0,
+					HALF_ICON_SIZE, ICON_SIZE);
+		if (elevatorBelow)
+			drawTexturedModalRect(0, -ICON_SIZE,
+					HALF_ICON_SIZE, 0,
+					HALF_ICON_SIZE, ICON_SIZE);
 
 		// Now undo our transformation
 		GL11.glPopMatrix();
