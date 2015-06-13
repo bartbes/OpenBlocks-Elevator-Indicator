@@ -25,6 +25,11 @@ public class IndicatorOverlay extends Gui
 	private Minecraft minecraft;
 	private boolean onElevator = false;
 
+	private int xPos = 0;
+	private int yPos = 0;
+	private int zPos = 0;
+	private boolean moved = true;
+
 	IndicatorOverlay()
 	{
 		super();
@@ -36,6 +41,10 @@ public class IndicatorOverlay extends Gui
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
 		if (event.phase != Phase.START)
+			return;
+
+		updatePosition();
+		if (!moved)
 			return;
 
 		Block b = getBlockUnderPlayer();
@@ -82,18 +91,24 @@ public class IndicatorOverlay extends Gui
 		return y;
 	}
 
-	private Block getBlockUnderPlayer()
+	private void updatePosition()
 	{
 		EntityClientPlayerMP player = minecraft.thePlayer;
-		World world = player.worldObj;
 
-		if (!player.onGround)
-			return null;
+		int x = round(player.posX);
+		int y = round(player.posY-player.height);
+		int z = round(player.posZ);
 
-		int posX = round(player.posX);
-		int posY = round(player.posY-player.height);
-		int posZ = round(player.posZ);
+		moved = (x != xPos || y != yPos || z != zPos);
 
-		return world.getBlock(posX, posY, posZ);
+		xPos = x;
+		yPos = y;
+		zPos = z;
+	}
+
+	private Block getBlockUnderPlayer()
+	{
+		World world = minecraft.thePlayer.worldObj;
+		return world.getBlock(xPos, yPos, zPos);
 	}
 }
