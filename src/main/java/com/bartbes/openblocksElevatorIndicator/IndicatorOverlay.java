@@ -99,7 +99,10 @@ public class IndicatorOverlay extends Gui
 		// Represents center x
 		int xpos = event.resolution.getScaledWidth()/2;
 		// Represents bottom y
-		int ypos = event.resolution.getScaledHeight() - 31;
+		int ypos = event.resolution.getScaledHeight();
+
+		// Now position it just above the experience level
+		ypos -= 40;
 
 		// Our image is a bit large, so we'll scale it down
 		GL11.glPushMatrix();
