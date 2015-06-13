@@ -2,6 +2,8 @@ package com.bartbes.openblocksElevatorIndicator;
 
 import org.lwjgl.opengl.GL11;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.client.gui.Gui;
@@ -22,8 +24,7 @@ public class IndicatorOverlay extends Gui
 	private static final ResourceLocation ICON_RES =
 		new ResourceLocation("openblockselevatorindicator:gui/obelevindicator.png");
 
-	// TODO: Pull from OpenBlocks config
-	private static final int ELEVATOR_RANGE = 20;
+	private static int elevatorRange;
 
 	private Minecraft minecraft;
 	private boolean onElevator = false;
@@ -40,6 +41,28 @@ public class IndicatorOverlay extends Gui
 		super();
 
 		minecraft = Minecraft.getMinecraft();
+
+		// Find the OpenBlocks config
+		boolean found = false;
+		try
+		{
+			ClassLoader loader = this.getClass().getClassLoader();
+			Class<?> confClass = loader.loadClass("openblocks.Config");
+
+			Field rangeField = confClass.getField("elevatorTravelDistance");
+			elevatorRange = rangeField.getInt(confClass);
+			found = true;
+		}
+		catch(ClassNotFoundException e) {}
+		catch(NoSuchFieldException e) {}
+		catch(IllegalAccessException e) {}
+
+		if (!found)
+		{
+			// Use the default value
+			elevatorRange = 20;
+			System.out.println("Failed to determine OpenBlocks elevator distance configuration value");
+		}
 	}
 
 	// Updating stuff
@@ -79,14 +102,14 @@ public class IndicatorOverlay extends Gui
 		Block elevatorBlock = IndicatorMod.instance.elevatorBlock;
 		elevatorAbove = elevatorBelow = false;
 
-		for (int i = yPos-1; i >= yPos - ELEVATOR_RANGE; i--)
+		for (int i = yPos-1; i >= yPos - elevatorRange; i--)
 			if (world.getBlock(xPos, i, zPos) == elevatorBlock)
 			{
 				elevatorBelow = true;
 				break;
 			}
 
-		for (int i = yPos+1; i <= yPos + ELEVATOR_RANGE; i++)
+		for (int i = yPos+1; i <= yPos + elevatorRange; i++)
 			if (world.getBlock(xPos, i, zPos) == elevatorBlock)
 			{
 				elevatorAbove = true;
