@@ -42,9 +42,7 @@ public class IndicatorMod
 			}
 		}
 
-		if (elevatorBlock != null)
-			System.out.println("Found elevator, has id: " + String.valueOf(Block.getIdFromBlock(elevatorBlock)));
-		else
+		if (elevatorBlock == null)
 			System.err.println("Failed to find elevator!");
 
 		overlay = new IndicatorOverlay();
