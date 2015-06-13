@@ -97,16 +97,16 @@ public class IndicatorOverlay extends Gui
 		minecraft.renderEngine.bindTexture(ICON_RES);
 
 		// Represents center x
-		int xpos = event.resolution.getScaledWidth()/2;
+		int xPos = event.resolution.getScaledWidth()/2;
 		// Represents bottom y
-		int ypos = event.resolution.getScaledHeight();
+		int yPos = event.resolution.getScaledHeight();
 
 		// Now position it just above the experience level
-		ypos -= 40;
+		yPos -= 40;
 
 		// Our image is a bit large, so we'll scale it down
 		GL11.glPushMatrix();
-		GL11.glTranslatef(xpos, ypos, 0.0f);
+		GL11.glTranslatef(xPos, yPos, 0.0f);
 		GL11.glScalef(0.25f, 0.25f, 1.0f);
 
 		drawTexturedModalRect(-HALF_ICON_SIZE, -ICON_SIZE,
