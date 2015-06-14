@@ -15,7 +15,7 @@ public class IndicatorMod
 {
 	public static final String MODNAME = "OpenBlocks Elevator Indicator";
 	public static final String MODID = "openblocksElevatorIndicator";
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.1";
 
 	@Mod.Instance(MODID)
 	public static IndicatorMod instance;
