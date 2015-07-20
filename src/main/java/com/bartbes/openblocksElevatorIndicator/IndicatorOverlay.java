@@ -19,8 +19,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 public class IndicatorOverlay extends Gui
 {
-	private static final int ICON_SIZE = 32;
-	private static final int HALF_ICON_SIZE = ICON_SIZE/2;
+	private static final int ICON_HEIGHT = 32;
+	private static final int ICON_WIDTH = 16;
 	private static final ResourceLocation ICON_RES =
 		new ResourceLocation("openblockselevatorindicator:gui/obelevindicator.png");
 
@@ -162,13 +162,17 @@ public class IndicatorOverlay extends Gui
 		GL11.glScalef(0.25f, 0.25f, 1.0f);
 
 		if (elevatorAbove)
-			drawTexturedModalRect(-HALF_ICON_SIZE, -ICON_SIZE,
+			drawTexturedModalRect(-ICON_WIDTH, -ICON_HEIGHT,
 					0, 0,
-					HALF_ICON_SIZE, ICON_SIZE);
+					ICON_WIDTH, ICON_HEIGHT);
+
 		if (elevatorBelow)
-			drawTexturedModalRect(0, -ICON_SIZE,
-					HALF_ICON_SIZE, 0,
-					HALF_ICON_SIZE, ICON_SIZE);
+		{
+			GL11.glRotatef(180.0f, 0, 0, 0);
+			drawTexturedModalRect(-ICON_WIDTH, 0,
+					0, 0,
+					ICON_WIDTH, ICON_HEIGHT);
+		}
 
 		// Now undo our transformation
 		GL11.glPopMatrix();
