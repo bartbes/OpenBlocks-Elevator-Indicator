@@ -20,7 +20,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 public class IndicatorOverlay extends Gui
 {
 	private static final int ICON_HEIGHT = 32;
-	private static final int ICON_WIDTH = 16;
+	private static final int ICON_WIDTH = 32;
 	private static final ResourceLocation ICON_RES =
 		new ResourceLocation("openblockselevatorindicator:gui/obelevindicator.png");
 
