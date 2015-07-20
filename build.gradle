@@ -72,7 +72,7 @@ processResources
     {
         def propsFile = new File(destinationDir, 'version.properties')
         def properties = new Properties()
-        properties[project.archivesBaseName + ".version"] = project.version
+        properties["openblocksElevatorIndicator.version"] = project.version
         properties.store(propsFile.newWriter(), null)
     }
 }
