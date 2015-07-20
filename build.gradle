@@ -30,7 +30,7 @@ gradle.projectsEvaluated
 
 apply plugin: 'forge'
 
-version = "1.1"
+version = "1.2"
 group = "com.bartbes.openblocksElevatorIndicator"
 archivesBaseName = "obelevindicator"
 
