@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.util.MathHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -65,23 +66,13 @@ public class IndicatorOverlay extends Gui
 		}
 	}
 
-	// Updating stuff
-	private int round(double x)
-	{
-		// Round away from 0
-		int y = (int) x;
-		if (y < 0)
-			return y-1;
-		return y;
-	}
-
 	private void updatePosition()
 	{
 		EntityClientPlayerMP player = minecraft.thePlayer;
 
-		int x = round(player.posX);
-		int y = round(player.posY-player.height);
-		int z = round(player.posZ);
+		int x = MathHelper.floor_double(player.posX);
+		int y = MathHelper.floor_double(player.posY-player.height);
+		int z = MathHelper.floor_double(player.posZ);
 
 		moved = (x != xPos || y != yPos || z != zPos);
 
