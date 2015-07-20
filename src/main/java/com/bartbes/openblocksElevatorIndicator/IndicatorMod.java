@@ -9,13 +9,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 
 @Mod(name = IndicatorMod.MODNAME,
 		modid = IndicatorMod.MODID,
-		version = IndicatorMod.VERSION,
 		dependencies = "required-after:OpenBlocks")
 public class IndicatorMod
 {
 	public static final String MODNAME = "OpenBlocks Elevator Indicator";
 	public static final String MODID = "openblocksElevatorIndicator";
-	public static final String VERSION = "1.1";
 
 	@Mod.Instance(MODID)
 	public static IndicatorMod instance;
