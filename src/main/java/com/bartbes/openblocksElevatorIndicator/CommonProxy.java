@@ -4,13 +4,9 @@ import cpw.mods.fml.common.FMLCommonHandler;
 
 import net.minecraftforge.common.MinecraftForge;
 
-public abstract class Proxy
+public class CommonProxy
 {
-	public static class Common extends Proxy
-	{
-	}
-
-	public static class Client extends Proxy.Common
+	public static class ClientProxy extends CommonProxy
 	{
 		@Override
 		void registerTickHandler(Object handler)

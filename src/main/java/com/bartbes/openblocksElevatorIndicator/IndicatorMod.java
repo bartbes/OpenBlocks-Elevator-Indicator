@@ -20,9 +20,9 @@ public class IndicatorMod
 	public static IndicatorMod instance;
 
 	@SidedProxy(modId = MODID,
-			clientSide = "com.bartbes.openblocksElevatorIndicator.Proxy$Client",
-			serverSide = "com.bartbes.openblocksElevatorIndicator.Proxy$Common")
-	public static Proxy proxy;
+			clientSide = "com.bartbes.openblocksElevatorIndicator.CommonProxy$ClientProxy",
+			serverSide = "com.bartbes.openblocksElevatorIndicator.CommonProxy")
+	public static CommonProxy proxy;
 
 	private IndicatorOverlay overlay;
 	Block elevatorBlock;
