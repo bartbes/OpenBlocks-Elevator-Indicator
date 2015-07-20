@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 
 @Mod(name = IndicatorMod.MODNAME,
@@ -29,19 +30,10 @@ public class IndicatorMod
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		for (Object o : Block.blockRegistry)
-		{
-			Block b = (Block) o;
-			String name = b.getUnlocalizedName();
-			if (name.equals("tile.openblocks.elevator"))
-			{
-				elevatorBlock = b;
-				break;
-			}
-		}
+		elevatorBlock = GameRegistry.findBlock("OpenBlocks", "elevator");
 
 		if (elevatorBlock == null)
-			System.err.println("Failed to find elevator!");
+			System.err.println("Can't find elevator!");
 
 		overlay = new IndicatorOverlay();
 		proxy.registerTickHandler(overlay);
